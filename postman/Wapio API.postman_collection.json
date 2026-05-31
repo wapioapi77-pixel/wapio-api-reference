@@ -5948,7 +5948,7 @@
             "name": "How to get a Channel ID",
             "description": {
               "type": "text/plain",
-              "content": "1. Connect the WhatsApp session that owns or can post in the channel.\n2. From WhatsApp on your phone, send any message inside the target channel.\n3. Check your Wapio webhook payload or message logs for the incoming channel message.\n4. Copy the remote JID/channel ID that ends with @newsletter.\n5. Store it in the Postman environment as channelId and use Send Channel Message."
+              "content": "1. Connect the WhatsApp session that owns or can post in the channel.\n2. From WhatsApp on your phone, send any message inside the target channel.\n3. Check your Wapio incoming event payload or message logs for the incoming channel message.\n4. Copy the remote JID/channel ID that ends with @newsletter.\n5. Store it in the Postman environment as channelId and use Send Channel Message."
             },
             "url": {
               "host": [
@@ -6084,7 +6084,7 @@
       ],
       "description": {
         "type": "text/plain",
-        "content": "Use Channels (Communities) to send messages into WhatsApp channels. To get a channel ID, send any message in the target channel from the connected WhatsApp number, then inspect your inbound webhook payload or session message logs. Copy the value that ends with @newsletter, for example 120363000000000000@newsletter, and save it as {{channelId}}."
+        "content": "Use Channels (Communities) to send messages into WhatsApp channels. To get a channel ID, send any message in the target channel from the connected WhatsApp number, then inspect your inbound incoming event payload or session message logs. Copy the value that ends with @newsletter, for example 120363000000000000@newsletter, and save it as {{channelId}}."
       }
     }
   ],
