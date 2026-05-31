@@ -300,7 +300,7 @@
           "request": {
             "name": "Create a session (PAT only)",
             "description": {
-              "content": "Creates a new WhatsApp session. The response includes the one-time\nraw `session_api_key.raw` (`bps_sk_*`) \u2014 store it; the API never\nreturns it again.\n",
+              "content": "Creates a new WhatsApp session. The response includes the one-time\nraw `session_api_key.raw` (`bps_sk_*`) — store it; the API never\nreturns it again.\n",
               "type": "text/plain"
             },
             "url": {
@@ -1688,7 +1688,7 @@
           "request": {
             "name": "Rotate the session-scoped key (PAT only)",
             "description": {
-              "content": "Returns a new `bps_sk_*` exactly once. The previous key is\nimmediately revoked. Session-scoped keys CANNOT call this \u2014 only\nPATs or dashboard cookies.\n",
+              "content": "Returns a new `bps_sk_*` exactly once. The previous key is\nimmediately revoked. Session-scoped keys CANNOT call this — only\nPATs or dashboard cookies.\n",
               "type": "text/plain"
             },
             "url": {
@@ -2053,34 +2053,33 @@
       "description": "Send, edit, delete, resend, inspect WhatsApp messages.",
       "item": [
         {
-          "id": "be1e95d1-8e4a-4f31-b178-d5c8d3cb8c51",
-          "name": "Send a WhatsApp message",
+          "id": "a84830db-d67f-4abe-a6d7-d1eae41584b1",
+          "name": "Send Text Message",
           "request": {
-            "name": "Send a WhatsApp message",
+            "name": "Send Text Message",
             "description": {
-              "content": "Discriminated by `kind` (and presence of media-URL / text / location\n/ contact / poll fields). Requires an `Idempotency-Key` header.\n\nFor session-scoped keys (`bps_sk_*`), passing `session_id` in the\nbody is rejected with 422 if it doesn't match the bound session.\nPATs may pass `session_id` explicitly.\n",
-              "type": "text/plain"
+              "type": "text/plain",
+              "content": "Send a plain text WhatsApp message. Use PATs with session_id or session-scoped keys without changing the bound session."
             },
             "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "api",
                 "send-message"
-              ],
-              "host": [
-                "{{baseUrl}}"
               ],
               "query": [],
               "variable": []
             },
             "header": [
               {
-                "disabled": false,
-                "description": {
-                  "content": "(Required) ",
-                  "type": "text/plain"
-                },
                 "key": "Idempotency-Key",
-                "value": "<uuid>"
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
               },
               {
                 "key": "Content-Type",
@@ -2094,7 +2093,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"text\",\n  \"text\": \"Hello from Wapio\"\n}",
               "options": {
                 "raw": {
                   "headerFamily": "json",
@@ -2106,125 +2105,8 @@
           },
           "response": [
             {
-              "id": "41bea503-eb57-49e4-82c9-3cfb0f9c16ed",
-              "name": "Accepted (delivered or in-progress).",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "send-message"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": {
-                      "content": "(Required) ",
-                      "type": "text/plain"
-                    },
-                    "key": "Idempotency-Key",
-                    "value": "<uuid>"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "headerFamily": "json",
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"msgId\": \"<string>\",\n  \"jid\": \"<string>\",\n  \"status\": \"failed\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "9652ca7d-1c2a-4c98-a438-6fba9c9d5ee8",
-              "name": "Queued for dispatch.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "send-message"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": {
-                      "content": "(Required) ",
-                      "type": "text/plain"
-                    },
-                    "key": "Idempotency-Key",
-                    "value": "<uuid>"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "headerFamily": "json",
-                      "language": "json"
-                    }
-                  }
-                }
-              },
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
               "status": "Accepted",
               "code": 202,
               "header": [
@@ -2233,65 +2115,14 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"msgId\": \"<string>\",\n  \"jid\": \"<string>\",\n  \"status\": \"failed\"\n}",
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "373dadc0-bbbe-4bd8-8737-1fcdca6b673f",
-              "name": "Body or query validation failed.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "send-message"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": {
-                      "content": "(Required) ",
-                      "type": "text/plain"
-                    },
-                    "key": "Idempotency-Key",
-                    "value": "<uuid>"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "headerFamily": "json",
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
               "code": 422,
               "header": [
                 {
@@ -2299,64 +2130,13 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             },
             {
-              "id": "9987d275-ac49-488e-8bdb-c2454cd8c476",
-              "name": "Per-account rate limit exceeded.",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "api",
-                    "send-message"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "disabled": false,
-                    "description": {
-                      "content": "(Required) ",
-                      "type": "text/plain"
-                    },
-                    "key": "Idempotency-Key",
-                    "value": "<uuid>"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  },
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "POST",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "headerFamily": "json",
-                      "language": "json"
-                    }
-                  }
-                }
-              },
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
               "status": "Too Many Requests",
               "code": 429,
               "header": [
@@ -2365,16 +2145,974 @@
                   "value": "application/json"
                 },
                 {
-                  "disabled": false,
-                  "description": {
-                    "content": "Seconds to wait before retrying.",
-                    "type": "text/plain"
-                  },
                   "key": "Retry-After",
-                  "value": "<integer>"
+                  "value": "60"
                 }
               ],
-              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a756e7df-0502-48ec-8de9-8dc36e690a59",
+          "name": "Send Image Message",
+          "request": {
+            "name": "Send Image Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send an image by public URL. Add caption when needed."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"image\",\n  \"imageUrl\": \"https://example.com/image.jpg\",\n  \"caption\": \"Image caption\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3aa1f502-aec9-44dc-864f-680abded8a3e",
+          "name": "Send Video Message",
+          "request": {
+            "name": "Send Video Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send a video by public URL. Add caption when needed."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"video\",\n  \"videoUrl\": \"https://example.com/video.mp4\",\n  \"caption\": \"Video caption\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4a2d3d9-7655-4e3c-b95b-fda64884de83",
+          "name": "Send Document Message",
+          "request": {
+            "name": "Send Document Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send a document by public URL. file_name and mime_type make the received file clearer for the user."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"document\",\n  \"documentUrl\": \"https://example.com/invoice.pdf\",\n  \"file_name\": \"invoice.pdf\",\n  \"mime_type\": \"application/pdf\",\n  \"caption\": \"Document caption\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0adb4f0-67dd-4527-b4d0-8514634ea4b8",
+          "name": "Send Audio Message",
+          "request": {
+            "name": "Send Audio Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send an audio file by public URL."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"audio\",\n  \"audioUrl\": \"https://example.com/audio.mp3\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce01cbd4-2900-4cc5-aacc-fd45299df12d",
+          "name": "Send Sticker Message",
+          "request": {
+            "name": "Send Sticker Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send a sticker by public URL."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"sticker\",\n  \"stickerUrl\": \"https://example.com/sticker.webp\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d90f4da9-52ff-4120-8aa7-be029e030e45",
+          "name": "Send View Once Message",
+          "request": {
+            "name": "Send View Once Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send media that can be opened once by the recipient."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"image\",\n  \"imageUrl\": \"https://example.com/private-image.jpg\",\n  \"caption\": \"Open once\",\n  \"viewOnce\": true\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4cbef272-e54b-4296-973f-557e034a5e91",
+          "name": "Send Location Message",
+          "request": {
+            "name": "Send Location Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send a WhatsApp location pin."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"location\",\n  \"location\": {\n    \"latitude\": 33.5731,\n    \"longitude\": -7.5898,\n    \"name\": \"Casablanca\",\n    \"address\": \"Casablanca, Morocco\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce6cf75f-8a68-496f-be54-097215fc6afd",
+          "name": "Send Contact Message",
+          "request": {
+            "name": "Send Contact Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send one contact card."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"contact\",\n  \"contact\": {\n    \"fullName\": \"M\",\n    \"phoneNumber\": \"+212600000000\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57f846b1-cb0f-49dd-a6b1-95bf85ab9bd9",
+          "name": "Send Poll Message",
+          "request": {
+            "name": "Send Poll Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send a poll with one or more options."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"to\": \"{{recipientPhone}}\",\n  \"kind\": \"poll\",\n  \"poll\": {\n    \"question\": \"Which time works best?\",\n    \"options\": [\n      \"Morning\",\n      \"Afternoon\"\n    ],\n    \"multiSelect\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -5204,34 +5942,66 @@
       "name": "Channels (Communities)",
       "item": [
         {
-          "id": "a25978e9-7f75-4de0-ab7a-df6ae0526ca2",
-          "name": "Send channel message",
+          "id": "1cddcb48-d168-4b5c-910f-f081137cb191",
+          "name": "How to get a Channel ID",
           "request": {
-            "name": "Send channel message",
+            "name": "How to get a Channel ID",
             "description": {
-              "content": "Send a message to a WhatsApp Channel / Community newsletter. Use the channel JID ending in `@newsletter` as `channel_id`.",
-              "type": "text/plain"
+              "type": "text/plain",
+              "content": "1. Connect the WhatsApp session that owns or can post in the channel.\n2. From WhatsApp on your phone, send any message inside the target channel.\n3. Check your Wapio webhook payload or message logs for the incoming channel message.\n4. Copy the remote JID/channel ID that ends with @newsletter.\n5. Store it in the Postman environment as channelId and use Send Channel Message."
             },
             "url": {
-              "path": [
-                "api",
-                "send-message"
-              ],
               "host": [
                 "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "message-logs"
               ],
               "query": [],
               "variable": []
             },
             "header": [
               {
-                "disabled": false,
-                "description": {
-                  "content": "(Required) ",
-                  "type": "text/plain"
-                },
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": []
+        },
+        {
+          "id": "6d1ddf38-31b2-484c-a66e-d957db8cb809",
+          "name": "Send Channel Message",
+          "request": {
+            "name": "Send Channel Message",
+            "description": {
+              "type": "text/plain",
+              "content": "Send a text message into a WhatsApp channel. channel_id must be the channel JID that ends with @newsletter."
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
                 "key": "Idempotency-Key",
-                "value": "<uuid>"
+                "value": "{{idempotencyKey}}",
+                "description": {
+                  "type": "text/plain",
+                  "content": "Use a new unique value for every send request."
+                }
               },
               {
                 "key": "Content-Type",
@@ -5245,7 +6015,7 @@
             "method": "POST",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"channel_id\": \"120363428122592568@newsletter\",\n  \"text\": \"This week's release is live\"\n}",
+              "raw": "{\n  \"session_id\": \"{{sessionId}}\",\n  \"channel_id\": \"{{channelId}}\",\n  \"kind\": \"text\",\n  \"text\": \"Hello channel from Wapio\"\n}",
               "options": {
                 "raw": {
                   "headerFamily": "json",
@@ -5255,13 +6025,67 @@
             },
             "auth": null
           },
-          "response": [],
+          "response": [
+            {
+              "id": "7e37e994-d9a2-40e3-81bc-d3b7eb4c0e15",
+              "name": "Queued for dispatch",
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"wamid.example\",\n  \"jid\": \"212600000000@s.whatsapp.net\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec63b700-04ac-4e44-a671-bf3d195e56b6",
+              "name": "Validation failed",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Validation failed\",\n  \"reason_code\": \"validation_error\",\n  \"errors\": {\n    \"to\": [\n      \"Required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc4f68cd-6627-4a38-aa43-fa2b99fb3bc3",
+              "name": "Rate limit exceeded",
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"Rate limit exceeded\",\n  \"reason_code\": \"rate_limited\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
           "event": [],
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           }
         }
-      ]
+      ],
+      "description": {
+        "type": "text/plain",
+        "content": "Use Channels (Communities) to send messages into WhatsApp channels. To get a channel ID, send any message in the target channel from the connected WhatsApp number, then inspect your inbound webhook payload or session message logs. Copy the value that ends with @newsletter, for example 120363000000000000@newsletter, and save it as {{channelId}}."
+      }
     }
   ],
   "auth": {
