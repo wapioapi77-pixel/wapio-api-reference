@@ -1,7 +1,7 @@
 instances:
   - url: wapio.docs.buildwithfern.com
 
-title: Wapio API
+title: "Wapio API Reference"
 navigation:
   - page: Overview
     path: ./docs/pages/overview.mdx
