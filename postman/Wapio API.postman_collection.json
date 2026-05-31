@@ -1,0 +1,5310 @@
+{
+  "item": [
+    {
+      "name": "Sessions",
+      "description": "WhatsApp session lifecycle (create, list, connect, pair, delete).",
+      "item": [
+        {
+          "id": "326afe8a-3bfd-4adc-8541-3da6d1a960b7",
+          "name": "List sessions",
+          "request": {
+            "name": "List sessions",
+            "description": {
+              "content": "Returns every non-deleted session in the account when called with a\nPAT. When called with a session-scoped key, returns only that one\nbound session (one-element list).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": " (This can only be one of pending,connecting,connected,disconnected,pending_deletion,deleted)",
+                    "type": "text/plain"
+                  },
+                  "key": "status",
+                  "value": "deleted"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "before_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "96971170-bda1-4f97-bea4-3636f438883e",
+              "name": "List of sessions, cursor-paginated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": " (This can only be one of pending,connecting,connected,disconnected,pending_deletion,deleted)",
+                        "type": "text/plain"
+                      },
+                      "key": "status",
+                      "value": "deleted"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "before_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"session_id\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"status\": \"connected\",\n      \"created_at\": \"<dateTime>\",\n      \"label\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"worker_id\": \"<string>\",\n      \"last_activity_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"session_api_key_fingerprint\": \"<string>\"\n    },\n    {\n      \"session_id\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"status\": \"connecting\",\n      \"created_at\": \"<dateTime>\",\n      \"label\": \"<string>\",\n      \"phone_number\": \"<string>\",\n      \"worker_id\": \"<string>\",\n      \"last_activity_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"session_api_key_fingerprint\": \"<string>\"\n    }\n  ],\n  \"next_cursor\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b03882d1-eda0-4a1c-a5b2-9024ff7ef729",
+              "name": "Missing or invalid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": " (This can only be one of pending,connecting,connected,disconnected,pending_deletion,deleted)",
+                        "type": "text/plain"
+                      },
+                      "key": "status",
+                      "value": "deleted"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "before_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7dcdfcf1-a0cd-4c53-bde9-9e72ddc4ef3a",
+              "name": "Per-account rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": " (This can only be one of pending,connecting,connected,disconnected,pending_deletion,deleted)",
+                        "type": "text/plain"
+                      },
+                      "key": "status",
+                      "value": "deleted"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "before_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Seconds to wait before retrying.",
+                    "type": "text/plain"
+                  },
+                  "key": "Retry-After",
+                  "value": "<integer>"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0687c6b0-2a72-4fa8-b00a-74502be535fb",
+          "name": "Create a session (PAT only)",
+          "request": {
+            "name": "Create a session (PAT only)",
+            "description": {
+              "content": "Creates a new WhatsApp session. The response includes the one-time\nraw `session_api_key.raw` (`bps_sk_*`) \u2014 store it; the API never\nreturns it again.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "05510887-01af-497b-9db1-f2fc3159d125",
+              "name": "Session created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session\": {\n    \"session_id\": \"<string>\",\n    \"account_id\": \"<string>\",\n    \"status\": \"disconnected\",\n    \"created_at\": \"<dateTime>\",\n    \"label\": \"<string>\",\n    \"phone_number\": \"<string>\",\n    \"worker_id\": \"<string>\",\n    \"last_activity_at\": \"<dateTime>\",\n    \"updated_at\": \"<dateTime>\",\n    \"session_api_key_fingerprint\": \"<string>\"\n  },\n  \"session_api_key\": {\n    \"raw\": \"<string>\",\n    \"fingerprint\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"previous_fingerprint\": \"<string>\"\n  },\n  \"warnings\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b0cd4ac-5d8d-49f1-add6-1771d53ac01d",
+              "name": "Missing or invalid Bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b3ecc5f-260a-4226-b018-6d31fc537a7c",
+              "name": "Authenticated but not allowed (e.g., session-scoped key on a PAT-only route).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "835f4366-cb67-4ef8-b1bb-18f129c17530",
+              "name": "Body or query validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82da5e2c-8bea-46fa-8139-d567fdeebd0a",
+          "name": "Get a session",
+          "request": {
+            "name": "Get a session",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db11e705-3c40-44fc-998e-849d3eeb4d16",
+              "name": "Session detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"status\": \"connecting\",\n  \"created_at\": \"<dateTime>\",\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"worker_id\": \"<string>\",\n  \"last_activity_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"session_api_key_fingerprint\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c52000d-2c92-4bd0-8178-d7119cf43747",
+              "name": "Resource not found, or not visible to this caller.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0bbc7865-2d53-48e4-9483-19673b8633b9",
+          "name": "Update session metadata + settings",
+          "request": {
+            "name": "Update session metadata + settings",
+            "description": {
+              "content": "Patches label, phone number, and operational toggles.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71dbed21-ddfc-470b-95e8-469c2ccdf689",
+              "name": "Updated session.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"status\": \"connecting\",\n  \"created_at\": \"<dateTime>\",\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"worker_id\": \"<string>\",\n  \"last_activity_at\": \"<dateTime>\",\n  \"updated_at\": \"<dateTime>\",\n  \"session_api_key_fingerprint\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1875feeb-2f68-49a5-b7c4-276d633f57cf",
+              "name": "Authenticated but not allowed (e.g., session-scoped key on a PAT-only route).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8ceded4-1e29-45b9-be37-79804a297bf3",
+              "name": "Resource not found, or not visible to this caller.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"label\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "979d2999-3476-4886-a555-e31f5a7c1c7c",
+          "name": "Delete a session (PAT only)",
+          "request": {
+            "name": "Delete a session (PAT only)",
+            "description": {
+              "content": "Marks the session for deletion and immediately revokes its\nsession-scoped API key.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "response": [
+            {
+              "id": "d27d1fae-12a6-4d8b-918c-a630d8451f4c",
+              "name": "Deletion queued.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"operation_id\": \"<string>\",\n  \"session_id\": \"<string>\",\n  \"operation_type\": \"<string>\",\n  \"status\": \"<string>\",\n  \"enqueued_at\": \"<dateTime>\",\n  \"started_at\": \"<dateTime>\",\n  \"finished_at\": \"<dateTime>\",\n  \"result\": \"\",\n  \"error\": \"\",\n  \"status_url\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed2e5e8e-2e67-4a29-a124-9f6484d25aca",
+              "name": "Authenticated but not allowed (e.g., session-scoped key on a PAT-only route).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e9b4dda-7647-4b96-88e0-36da921c374f",
+              "name": "Resource not found, or not visible to this caller.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66bc6227-6dc4-4c28-ad93-36b431f8c2f9",
+          "name": "Connect a paired session",
+          "request": {
+            "name": "Connect a paired session",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "connect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ffb79d04-447f-49a8-8fca-ed7dc00fab55",
+              "name": "Worker dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08c3abeb-2536-4634-ab90-5bf6ac8c5c29",
+              "name": "Resource not found, or not visible to this caller.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4205375-325d-481b-99ac-c27629f110a6",
+              "name": "Resource not in a state that supports this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "connect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73062ee4-5c58-44bf-8934-670f6120a782",
+          "name": "Disconnect a session",
+          "request": {
+            "name": "Disconnect a session",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "disconnect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25d5add6-b96f-4892-bc49-d73d397f38f7",
+              "name": "Worker dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "disconnect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8bfb451c-7dd6-4bd0-a5a7-a2ba52f5fda5",
+          "name": "Restart the session worker",
+          "request": {
+            "name": "Restart the session worker",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "restart"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "382da4ed-bc21-4df1-8f42-90b7af2f43ab",
+              "name": "Worker dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "restart"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0fc1ad6e-3ecd-4179-b2b3-472000b7ed39",
+          "name": "Get the pairing QR code",
+          "request": {
+            "name": "Get the pairing QR code",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "qrcode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e97daeb8-e139-4b62-90e4-5d698830df81",
+              "name": "QR payload (image/data-uri or string).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "qrcode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"qr\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7bc1af9-de95-4436-a6d0-a0a58757da21",
+              "name": "Resource not in a state that supports this operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "qrcode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f745a12-7b1e-43e8-a27d-b082b6cede3d",
+          "name": "Rotate the session-scoped key (PAT only)",
+          "request": {
+            "name": "Rotate the session-scoped key (PAT only)",
+            "description": {
+              "content": "Returns a new `bps_sk_*` exactly once. The previous key is\nimmediately revoked. Session-scoped keys CANNOT call this \u2014 only\nPATs or dashboard cookies.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "regenerate-key"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "response": [
+            {
+              "id": "d091ef21-5613-4f2a-9117-5b25d24f52c5",
+              "name": "New key minted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "regenerate-key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_api_key\": {\n    \"raw\": \"<string>\",\n    \"fingerprint\": \"<string>\",\n    \"created_at\": \"<dateTime>\",\n    \"previous_fingerprint\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcb5b0c4-1674-4342-b6b9-c26f0ede5338",
+              "name": "Authenticated but not allowed (e.g., session-scoped key on a PAT-only route).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "regenerate-key"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "518d4726-21b9-4d04-9399-8d6bdc109c42",
+          "name": "Get session operational settings",
+          "request": {
+            "name": "Get session operational settings",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75024ed9-f3b4-4f36-a45d-1f01793c2009",
+              "name": "Current settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3010607-ed73-4a99-b921-cef3b223aaec",
+          "name": "Update session operational settings",
+          "request": {
+            "name": "Update session operational settings",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "whatsapp-sessions",
+                "{{sessionId}}",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_protection\": \"<boolean>\",\n  \"read_incoming\": \"<boolean>\",\n  \"auto_reject_calls\": \"<boolean>\",\n  \"always_online\": \"<boolean>\",\n  \"ignore_groups\": \"<boolean>\",\n  \"ignore_broadcasts\": \"<boolean>\",\n  \"ignore_channels\": \"<boolean>\",\n  \"typing\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "81cef075-5fbc-4b29-914e-48e743dffb0b",
+              "name": "Updated settings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "whatsapp-sessions",
+                    ":sessionId",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sessionId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_protection\": \"<boolean>\",\n  \"read_incoming\": \"<boolean>\",\n  \"auto_reject_calls\": \"<boolean>\",\n  \"always_online\": \"<boolean>\",\n  \"ignore_groups\": \"<boolean>\",\n  \"ignore_broadcasts\": \"<boolean>\",\n  \"ignore_channels\": \"<boolean>\",\n  \"typing\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_settings\": {\n    \"account_protection\": \"<boolean>\",\n    \"read_incoming\": \"<boolean>\",\n    \"auto_reject_calls\": \"<boolean>\",\n    \"always_online\": \"<boolean>\",\n    \"ignore_groups\": \"<boolean>\",\n    \"ignore_broadcasts\": \"<boolean>\",\n    \"ignore_channels\": \"<boolean>\",\n    \"typing\": \"<boolean>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "description": "Send, edit, delete, resend, inspect WhatsApp messages.",
+      "item": [
+        {
+          "id": "be1e95d1-8e4a-4f31-b178-d5c8d3cb8c51",
+          "name": "Send a WhatsApp message",
+          "request": {
+            "name": "Send a WhatsApp message",
+            "description": {
+              "content": "Discriminated by `kind` (and presence of media-URL / text / location\n/ contact / poll fields). Requires an `Idempotency-Key` header.\n\nFor session-scoped keys (`bps_sk_*`), passing `session_id` in the\nbody is rejected with 422 if it doesn't match the bound session.\nPATs may pass `session_id` explicitly.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) ",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "41bea503-eb57-49e4-82c9-3cfb0f9c16ed",
+              "name": "Accepted (delivered or in-progress).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "send-message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) ",
+                      "type": "text/plain"
+                    },
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"<string>\",\n  \"jid\": \"<string>\",\n  \"status\": \"failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9652ca7d-1c2a-4c98-a438-6fba9c9d5ee8",
+              "name": "Queued for dispatch.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "send-message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) ",
+                      "type": "text/plain"
+                    },
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"msgId\": \"<string>\",\n  \"jid\": \"<string>\",\n  \"status\": \"failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "373dadc0-bbbe-4bd8-8737-1fcdca6b673f",
+              "name": "Body or query validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "send-message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) ",
+                      "type": "text/plain"
+                    },
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9987d275-ac49-488e-8bdb-c2454cd8c476",
+              "name": "Per-account rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "send-message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) ",
+                      "type": "text/plain"
+                    },
+                    "key": "Idempotency-Key",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"session_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"channel_id\": \"<string>\",\n  \"text\": \"<string>\",\n  \"kind\": \"image\",\n  \"media_handle\": \"<string>\",\n  \"url\": \"<uri>\",\n  \"imageUrl\": \"<uri>\",\n  \"videoUrl\": \"<uri>\",\n  \"documentUrl\": \"<uri>\",\n  \"audioUrl\": \"<uri>\",\n  \"stickerUrl\": \"<uri>\",\n  \"caption\": \"<string>\",\n  \"mime_type\": \"<string>\",\n  \"file_name\": \"<string>\",\n  \"viewOnce\": \"<boolean>\",\n  \"quoted_message_id\": \"<string>\",\n  \"mentions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"location\": {\n    \"latitude\": \"<number>\",\n    \"longitude\": \"<number>\",\n    \"name\": \"<string>\",\n    \"address\": \"<string>\"\n  },\n  \"contact\": {\n    \"key_0\": true,\n    \"key_1\": 8604\n  },\n  \"poll\": {\n    \"question\": \"<string>\",\n    \"options\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"multiSelect\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Seconds to wait before retrying.",
+                    "type": "text/plain"
+                  },
+                  "key": "Retry-After",
+                  "value": "<integer>"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f3f3fc1-bac3-4921-8488-1483f942d1be",
+          "name": "Get delivery info for a message",
+          "request": {
+            "name": "Get delivery info for a message",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "{{messageId}}",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "595c8f66-179e-4e1a-8dc7-b2e9bc2ae20b",
+              "name": "Message info + per-attempt events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message_id\": \"<string>\",\n  \"session_id\": \"<string>\",\n  \"provider_msg_id\": \"<string>\",\n  \"to\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"accepted_at\": \"<dateTime>\",\n  \"delivered_at\": \"<dateTime>\",\n  \"read_at\": \"<dateTime>\",\n  \"deleted_at\": \"<dateTime>\",\n  \"failed_at\": \"<dateTime>\",\n  \"failure_reason\": \"<string>\",\n  \"updated_at\": \"<dateTime>\",\n  \"events\": [\n    {\n      \"event_id\": \"<integer>\",\n      \"event_type\": \"<string>\",\n      \"update_kind\": \"<string>\",\n      \"emitted_at\": \"<dateTime>\"\n    },\n    {\n      \"event_id\": \"<integer>\",\n      \"event_type\": \"<string>\",\n      \"update_kind\": \"<string>\",\n      \"emitted_at\": \"<dateTime>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3c90dd5-adf7-44f5-869a-b8dfa5747959",
+              "name": "Resource not found, or not visible to this caller.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "968f8b52-2c44-420c-a690-2d81ca290203",
+          "name": "Delete (revoke) a previously-sent message",
+          "request": {
+            "name": "Delete (revoke) a previously-sent message",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "{{messageId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a79e67c6-1f49-46e6-9b8b-d7ea56715508",
+              "name": "Dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "54caa5e1-0c7d-4d4c-9523-ab0afe75265c",
+              "name": "Resource not found, or not visible to this caller.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\",\n  \"success\": \"<boolean>\",\n  \"reason_code\": \"<string>\",\n  \"errors\": {\n    \"key_0\": 8418\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85c76a7d-48f7-496f-a247-0819e1a7e65d",
+          "name": "Edit a message (alias)",
+          "request": {
+            "name": "Edit a message (alias)",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "{{messageId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2372fc4c-7333-4a06-8417-0d349095b137",
+              "name": "Dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "092a9bcd-46ca-469d-b9b8-d9cb4ff522c7",
+          "name": "Edit a previously-sent text message",
+          "request": {
+            "name": "Edit a previously-sent text message",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "{{messageId}}",
+                "edit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ea160691-e5ad-4506-9716-512fb83db2ed",
+              "name": "Dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "edit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0ac33f2-1f44-4c59-8910-8c2c97ccd592",
+          "name": "Re-dispatch a previously-sent message",
+          "request": {
+            "name": "Re-dispatch a previously-sent message",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "{{messageId}}",
+                "resend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64dad27e-c113-4b32-852f-8d6eeb085b75",
+              "name": "Dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    ":messageId",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "39153a25-ab48-48f1-b416-26b2bfe76275",
+          "name": "Mark one or more messages as read",
+          "request": {
+            "name": "Mark one or more messages as read",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "messages",
+                "read"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message_ids\": [\n    \"<string>\"\n  ],\n  \"chat_jid\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13a006f2-3680-4fdd-bffe-d7d166ec66c2",
+              "name": "Dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "messages",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message_ids\": [\n    \"<string>\"\n  ],\n  \"chat_jid\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c09fb389-edba-4f4b-891d-68414115d2c8",
+          "name": "Update typing / online presence",
+          "request": {
+            "name": "Update typing / online presence",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "send-presence-update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"<string>\",\n  \"presence\": \"paused\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0f048d6-da4a-424e-ac6e-a1e98585c4db",
+              "name": "Dispatched.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "send-presence-update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<string>\",\n  \"presence\": \"paused\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "description": "Contact list, get, block, unblock, profile picture, upsert.",
+      "item": [
+        {
+          "id": "7a6e8606-eff8-4f9d-bafe-2517c4dfc1ab",
+          "name": "Resolve a phone's WhatsApp registration status",
+          "request": {
+            "name": "Resolve a phone's WhatsApp registration status",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "on-whatsapp",
+                ":phone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "048f0dd6-126a-4ae9-8ce8-67128a0210dd",
+              "name": "Resolution result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "on-whatsapp",
+                    ":phone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"exists\": \"<boolean>\",\n  \"jid\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7f87866-565a-499a-9338-7c9eda4c0985",
+          "name": "List contacts",
+          "request": {
+            "name": "List contacts",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "184e0671-eb3c-4baa-b351-b5facf68e699",
+              "name": "Contacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2784ca19-4e74-4861-b632-cb981f81c29c",
+          "name": "Upsert a contact",
+          "request": {
+            "name": "Upsert a contact",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5d858da-9a67-47cc-9e19-309d68210c8f",
+              "name": "Upserted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"phone\": \"<string>\",\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82c02d90-3ab5-4259-bde8-e8dc82c7439b",
+          "name": "Get a contact by phone",
+          "request": {
+            "name": "Get a contact by phone",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "contacts",
+                ":phone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90104b79-b880-4798-a46f-67070980cdc3",
+              "name": "Contact.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "contacts",
+                    ":phone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc172dd6-49cf-477f-bc5e-1808aa0c5a82",
+          "name": "Get a contact's profile picture URL",
+          "request": {
+            "name": "Get a contact's profile picture URL",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "contacts",
+                ":jid",
+                "picture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7af7ea6a-c652-40bc-917f-e4ccca4433db",
+              "name": "Picture URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "contacts",
+                    ":jid",
+                    "picture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aaae76f4-565b-497f-b4b5-d4ec33324e88",
+          "name": "Block a contact",
+          "request": {
+            "name": "Block a contact",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "contacts",
+                ":phone",
+                "block"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2f18ca5c-7c06-4532-bd28-9e925cb6c483",
+              "name": "Blocked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "contacts",
+                    ":phone",
+                    "block"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "186dae78-b7bf-45cd-a415-ac80677e0bfb",
+          "name": "Unblock a contact",
+          "request": {
+            "name": "Unblock a contact",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "contacts",
+                ":phone",
+                "unblock"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "phone",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d14d00d7-f5b1-4e35-ba65-db85991411a9",
+              "name": "Unblocked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "contacts",
+                    ":phone",
+                    "unblock"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "phone"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Groups",
+      "description": "Group CRUD, participants, invite link, profile picture.",
+      "item": [
+        {
+          "id": "f16c4c4e-754a-4e1a-9e71-27fb12041991",
+          "name": "List groups",
+          "request": {
+            "name": "List groups",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b0f304a3-bcab-4d1a-9494-73687c081c79",
+              "name": "Groups.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56bcdf99-bd7c-4007-8b3d-d7781e5476ec",
+          "name": "Create a group",
+          "request": {
+            "name": "Create a group",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"<string>\",\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "348fd67d-2bef-4bb9-a2d6-916ca2825203",
+              "name": "Group created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subject\": \"<string>\",\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9871a284-e572-4ff3-bfbf-da3a495c6ada",
+          "name": "Get a group",
+          "request": {
+            "name": "Get a group",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0bafcfb4-b0e8-4dd8-baa8-747cea4ee1da",
+              "name": "Group detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01d5d266-fea3-465d-bcae-67ada1d2932e",
+          "name": "Get group metadata",
+          "request": {
+            "name": "Get group metadata",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0bd9aaf-7b95-445e-8ae1-48f5754179a9",
+              "name": "Metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6f027c9-3ecd-47ad-af92-1ecf30fea277",
+          "name": "List group participants",
+          "request": {
+            "name": "List group participants",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "participants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b681578-b27c-4655-b3fa-f1acf336fbbc",
+              "name": "Participants.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "participants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bd8ca6d-0fd4-4617-b803-b12d63ddaaf3",
+          "name": "Add group participants",
+          "request": {
+            "name": "Add group participants",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "participants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dd530a77-c5de-4583-b441-9e636e223db4",
+              "name": "Updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "participants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b51c6bc6-de86-4ca7-85e4-825b71899a59",
+          "name": "Remove group participants",
+          "request": {
+            "name": "Remove group participants",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "participants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2001708d-0e41-460d-a468-d63e8915132e",
+              "name": "Updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "participants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "652fe184-8757-49f9-bdce-8885c8011350",
+          "name": "Promote participants to admin",
+          "request": {
+            "name": "Promote participants to admin",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "participants",
+                "promote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db49a730-5e12-431c-87a4-4c99159546e2",
+              "name": "Updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "participants",
+                    "promote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54291b87-b91a-4634-89b9-6e76878e84d5",
+          "name": "Demote participants from admin",
+          "request": {
+            "name": "Demote participants from admin",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "participants",
+                "demote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ee34b6b2-2884-48dc-b7c0-2201795df452",
+              "name": "Updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "participants",
+                    "demote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participants\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8969e10a-bfc1-40f6-85a6-b1854d501660",
+          "name": "Update group settings",
+          "request": {
+            "name": "Update group settings",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": 712,\n  \"key_1\": 1965.9932915115264\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9886de22-8400-4d74-9a29-30ff10b08584",
+              "name": "Updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": 712,\n  \"key_1\": 1965.9932915115264\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74533e45-4d3f-47a7-83a1-961df765ba0a",
+          "name": "Get the group's profile picture URL",
+          "request": {
+            "name": "Get the group's profile picture URL",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "picture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7d6baedc-fc00-428a-99ab-12798b7ba3b3",
+              "name": "Picture URL.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "picture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86f6c310-9a76-4d01-a0cd-326b9abb4c41",
+          "name": "Get the group's invite link",
+          "request": {
+            "name": "Get the group's invite link",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "invite-link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f587a37-a675-43ca-8bb5-4326f5bf60f2",
+              "name": "Invite link.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "invite-link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "024898a1-fb46-4f28-9915-d40c4a708159",
+          "name": "Leave a group",
+          "request": {
+            "name": "Leave a group",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                ":groupJid",
+                "leave"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupJid",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "POST",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eda8e496-b93d-43f3-af86-4070274a4d26",
+              "name": "Left.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    ":groupJid",
+                    "leave"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupJid"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5e3958f-d37c-4f18-b973-075b6f0c31dd",
+          "name": "Resolve a group invite code",
+          "request": {
+            "name": "Resolve a group invite code",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                "invite",
+                ":inviteCode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inviteCode",
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  }
+                }
+              ]
+            },
+            "method": "GET",
+            "body": {},
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64a55053-f42c-431d-826a-efef77bf189b",
+              "name": "Invite metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    "invite",
+                    ":inviteCode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inviteCode"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9596738-10ef-4825-aa33-3112e201c9e6",
+          "name": "Accept a group invite code",
+          "request": {
+            "name": "Accept a group invite code",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "groups",
+                "invite",
+                "accept"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invite_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5348862c-f345-4909-9f53-fc7602a3673e",
+              "name": "Joined.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "groups",
+                    "invite",
+                    "accept"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite_code\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [],
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Channels (Communities)",
+      "item": [
+        {
+          "id": "a25978e9-7f75-4de0-ab7a-df6ae0526ca2",
+          "name": "Send channel message",
+          "request": {
+            "name": "Send channel message",
+            "description": {
+              "content": "Send a message to a WhatsApp Channel / Community newsletter. Use the channel JID ending in `@newsletter` as `channel_id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "send-message"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) ",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel_id\": \"120363428122592568@newsletter\",\n  \"text\": \"This week's release is live\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "auth": null
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{apiToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.wapio.io",
+      "type": "string",
+      "description": "Wapio API base URL. Override per environment."
+    },
+    {
+      "key": "apiToken",
+      "value": "",
+      "type": "string",
+      "description": "Bearer token: `bps_pat_*` (PAT) or `bps_sk_*` (session-scoped). Prefer setting this in an environment, not the collection itself."
+    },
+    {
+      "key": "sessionId",
+      "value": "",
+      "type": "string",
+      "description": "WhatsApp session id (bps_sess_ws_*) used in path params."
+    },
+    {
+      "key": "messageId",
+      "value": "",
+      "type": "string",
+      "description": "Message id (bps_msg_*) used in /api/messages/* path params."
+    }
+  ],
+  "info": {
+    "name": "Wapio API",
+    "_postman_id": "00000000-0000-4000-8000-000000000001",
+    "description": "Public Wapio API collection for sessions, messages, contacts, groups, and channels.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  }
+}

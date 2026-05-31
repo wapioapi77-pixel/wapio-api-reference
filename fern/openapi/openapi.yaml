@@ -1,0 +1,1354 @@
+openapi: 3.1.0
+info:
+  title: Wapio API
+  version: 1.0.0
+  summary: Developer-first WhatsApp API. Send messages and manage WhatsApp sessions.
+  description: 'The Wapio HTTP API exposes WhatsApp session lifecycle, messaging,
+    contacts, groups, and channel/community sending.
+
+
+    ## Authentication
+
+
+    Every request uses `Authorization: Bearer <token>` with either a Personal Access
+    Token (`bps_pat_*`) or a session-scoped key (`bps_sk_*`).
+
+
+    ## Idempotency
+
+
+    `POST /api/send-message` requires an `Idempotency-Key` header. Replaying the same
+    key on the same session returns the original message id without re-sending.
+
+    '
+  contact:
+    name: Wapio Support
+    email: support@wapio.io
+    url: https://www.wapio.io
+  license:
+    name: MIT
+servers:
+- url: https://api.wapio.io
+  description: Production
+- url: https://api.staging.wapio.io
+  description: Staging
+security:
+- bearerAuth: []
+tags:
+- name: Sessions
+  description: 'WhatsApp session lifecycle: create, list, connect, pair, update, and
+    delete.'
+- name: Messages
+  description: Send, edit, delete, resend, inspect, and mark WhatsApp messages.
+- name: Contacts
+  description: Resolve WhatsApp numbers, list contacts, update contacts, profile pictures,
+    block, and unblock.
+- name: Groups
+  description: 'Group management: list, create, metadata, participants, settings,
+    invite links, and leave.'
+- name: Channels (Communities)
+  description: Send messages to WhatsApp Channels / Communities using channel IDs
+    ending in @newsletter.
+paths:
+  /v1/whatsapp-sessions:
+    get:
+      tags:
+      - Sessions
+      operationId: listSessions
+      summary: List sessions
+      description: 'Returns every non-deleted session in the account when called with
+        a
+
+        PAT. When called with a session-scoped key, returns only that one
+
+        bound session (one-element list).
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/StatusFilter'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/BeforeId'
+      responses:
+        '200':
+          description: List of sessions, cursor-paginated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    post:
+      tags:
+      - Sessions
+      operationId: createSession
+      summary: Create a session (PAT only)
+      description: "Creates a new WhatsApp session. The response includes the one-time\n\
+        raw `session_api_key.raw` (`bps_sk_*`) \u2014 store it; the API never\nreturns\
+        \ it again.\n"
+      security:
+      - patAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
+      responses:
+        '201':
+          description: Session created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSessionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Validation'
+  /v1/whatsapp-sessions/{sessionId}:
+    parameters:
+    - $ref: '#/components/parameters/SessionId'
+    get:
+      tags:
+      - Sessions
+      operationId: getSession
+      summary: Get a session
+      responses:
+        '200':
+          description: Session detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags:
+      - Sessions
+      operationId: updateSession
+      summary: Update session metadata + settings
+      description: 'Patches label, phone number, and operational toggles.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSessionRequest'
+      responses:
+        '200':
+          description: Updated session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - Sessions
+      operationId: deleteSession
+      summary: Delete a session (PAT only)
+      description: 'Marks the session for deletion and immediately revokes its
+
+        session-scoped API key.
+
+        '
+      security:
+      - patAuth: []
+      responses:
+        '202':
+          description: Deletion queued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OperationStatus'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/whatsapp-sessions/{sessionId}/connect:
+    post:
+      tags:
+      - Sessions
+      operationId: connectSession
+      summary: Connect a paired session
+      parameters:
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: Worker dispatched.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /v1/whatsapp-sessions/{sessionId}/disconnect:
+    post:
+      tags:
+      - Sessions
+      operationId: disconnectSession
+      summary: Disconnect a session
+      parameters:
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: Worker dispatched.
+  /v1/whatsapp-sessions/{sessionId}/restart:
+    post:
+      tags:
+      - Sessions
+      operationId: restartSession
+      summary: Restart the session worker
+      parameters:
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: Worker dispatched.
+  /v1/whatsapp-sessions/{sessionId}/qrcode:
+    get:
+      tags:
+      - Sessions
+      operationId: getSessionQrCode
+      summary: Get the pairing QR code
+      parameters:
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: QR payload (image/data-uri or string).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  qr:
+                    type: string
+                    description: Data-URI PNG or raw QR string.
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /v1/whatsapp-sessions/{sessionId}/regenerate-key:
+    post:
+      tags:
+      - Sessions
+      operationId: regenerateApiKey
+      summary: Rotate the session-scoped key (PAT only)
+      description: "Returns a new `bps_sk_*` exactly once. The previous key is\nimmediately\
+        \ revoked. Session-scoped keys CANNOT call this \u2014 only\nPATs or dashboard\
+        \ cookies.\n"
+      security:
+      - patAuth: []
+      parameters:
+      - $ref: '#/components/parameters/SessionId'
+      responses:
+        '200':
+          description: New key minted.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_api_key:
+                    $ref: '#/components/schemas/SessionApiKey'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /v1/whatsapp-sessions/{sessionId}/settings:
+    parameters:
+    - $ref: '#/components/parameters/SessionId'
+    get:
+      tags:
+      - Sessions
+      operationId: getSessionSettings
+      summary: Get session operational settings
+      responses:
+        '200':
+          description: Current settings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_settings:
+                    $ref: '#/components/schemas/SessionSettings'
+    patch:
+      tags:
+      - Sessions
+      operationId: updateSessionSettings
+      summary: Update session operational settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionSettings'
+      responses:
+        '200':
+          description: Updated settings.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_settings:
+                    $ref: '#/components/schemas/SessionSettings'
+  /api/send-message:
+    post:
+      tags:
+      - Messages
+      - Channels (Communities)
+      operationId: sendMessage
+      summary: Send a WhatsApp message
+      description: 'Discriminated by `kind` (and presence of media-URL / text / location
+
+        / contact / poll fields). Requires an `Idempotency-Key` header.
+
+
+        For session-scoped keys (`bps_sk_*`), passing `session_id` in the
+
+        body is rejected with 422 if it doesn''t match the bound session.
+
+        PATs may pass `session_id` explicitly.
+
+        '
+      parameters:
+      - in: header
+        name: Idempotency-Key
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+            examples:
+              text:
+                $ref: '#/components/examples/SendText'
+              image:
+                $ref: '#/components/examples/SendImage'
+              poll:
+                $ref: '#/components/examples/SendPoll'
+              location:
+                $ref: '#/components/examples/SendLocation'
+      responses:
+        '200':
+          description: Accepted (delivered or in-progress).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResult'
+        '202':
+          description: Queued for dispatch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMessageResult'
+        '422':
+          $ref: '#/components/responses/Validation'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/messages/{messageId}/info:
+    get:
+      tags:
+      - Messages
+      operationId: getMessageInfo
+      summary: Get delivery info for a message
+      parameters:
+      - $ref: '#/components/parameters/MessageId'
+      responses:
+        '200':
+          description: Message info + per-attempt events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageInfo'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/messages/{messageId}:
+    parameters:
+    - $ref: '#/components/parameters/MessageId'
+    delete:
+      tags:
+      - Messages
+      operationId: deleteMessage
+      summary: Delete (revoke) a previously-sent message
+      responses:
+        '200':
+          description: Dispatched.
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+      - Messages
+      operationId: editMessagePut
+      summary: Edit a message (alias)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - text
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 65536
+      responses:
+        '200':
+          description: Dispatched.
+  /api/messages/{messageId}/edit:
+    post:
+      tags:
+      - Messages
+      operationId: editMessage
+      summary: Edit a previously-sent text message
+      parameters:
+      - $ref: '#/components/parameters/MessageId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - text
+              properties:
+                text:
+                  type: string
+                  minLength: 1
+                  maxLength: 65536
+      responses:
+        '200':
+          description: Dispatched.
+  /api/messages/{messageId}/resend:
+    post:
+      tags:
+      - Messages
+      operationId: resendMessage
+      summary: Re-dispatch a previously-sent message
+      parameters:
+      - $ref: '#/components/parameters/MessageId'
+      responses:
+        '200':
+          description: Dispatched.
+  /api/messages/read:
+    post:
+      tags:
+      - Messages
+      operationId: markMessagesRead
+      summary: Mark one or more messages as read
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - message_ids
+              properties:
+                message_ids:
+                  type: array
+                  items:
+                    type: string
+                  minItems: 1
+                chat_jid:
+                  type: string
+      responses:
+        '200':
+          description: Dispatched.
+  /api/send-presence-update:
+    post:
+      tags:
+      - Messages
+      operationId: sendPresenceUpdate
+      summary: Update typing / online presence for a chat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - to
+              - presence
+              properties:
+                to:
+                  type: string
+                presence:
+                  type: string
+                  enum:
+                  - available
+                  - unavailable
+                  - composing
+                  - recording
+                  - paused
+      responses:
+        '200':
+          description: Dispatched.
+  /api/on-whatsapp/{phone}:
+    get:
+      tags:
+      - Contacts
+      operationId: checkOnWhatsapp
+      summary: Resolve a phone's WhatsApp registration status
+      parameters:
+      - name: phone
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '+15551234567'
+      responses:
+        '200':
+          description: Resolution result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exists:
+                    type: boolean
+                  jid:
+                    type: string
+                    nullable: true
+  /api/contacts:
+    get:
+      tags:
+      - Contacts
+      operationId: getContacts
+      summary: List contacts
+      responses:
+        '200':
+          description: Contacts.
+    put:
+      tags:
+      - Contacts
+      operationId: upsertContact
+      summary: Upsert a contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - phone
+              properties:
+                phone:
+                  type: string
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Upserted.
+  /api/contacts/{phone}:
+    parameters:
+    - name: phone
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Contacts
+      operationId: getContact
+      summary: Get a contact by phone
+      responses:
+        '200':
+          description: Contact.
+  /api/contacts/{jid}/picture:
+    parameters:
+    - name: jid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Contacts
+      operationId: getContactProfilePicture
+      summary: Get a contact's profile picture URL
+      responses:
+        '200':
+          description: Picture URL.
+  /api/contacts/{phone}/block:
+    parameters:
+    - name: phone
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Contacts
+      operationId: blockContact
+      summary: Block a contact
+      responses:
+        '200':
+          description: Blocked.
+  /api/contacts/{phone}/unblock:
+    parameters:
+    - name: phone
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Contacts
+      operationId: unblockContact
+      summary: Unblock a contact
+      responses:
+        '200':
+          description: Unblocked.
+  /api/groups:
+    get:
+      tags:
+      - Groups
+      operationId: getGroups
+      summary: List groups
+      responses:
+        '200':
+          description: Groups.
+    post:
+      tags:
+      - Groups
+      operationId: createGroup
+      summary: Create a group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - subject
+              properties:
+                subject:
+                  type: string
+                  minLength: 1
+                participants:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Group created.
+  /api/groups/{groupJid}:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Groups
+      operationId: getGroup
+      summary: Get a group
+      responses:
+        '200':
+          description: Group detail.
+  /api/groups/{groupJid}/metadata:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Groups
+      operationId: getGroupMetadata
+      summary: Get group metadata
+      responses:
+        '200':
+          description: Metadata.
+  /api/groups/{groupJid}/participants:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Groups
+      operationId: getGroupParticipants
+      summary: List group participants
+      responses:
+        '200':
+          description: Participants.
+    post:
+      tags:
+      - Groups
+      operationId: addGroupParticipants
+      summary: Add group participants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - participants
+              properties:
+                participants:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Updated.
+    delete:
+      tags:
+      - Groups
+      operationId: removeGroupParticipants
+      summary: Remove group participants
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - participants
+              properties:
+                participants:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Updated.
+  /api/groups/{groupJid}/participants/promote:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Groups
+      operationId: promoteGroupParticipants
+      summary: Promote participants to admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - participants
+              properties:
+                participants:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Updated.
+  /api/groups/{groupJid}/participants/demote:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Groups
+      operationId: demoteGroupParticipants
+      summary: Demote participants from admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - participants
+              properties:
+                participants:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Updated.
+  /api/groups/{groupJid}/settings:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    put:
+      tags:
+      - Groups
+      operationId: updateGroupSettings
+      summary: Update group settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Updated.
+  /api/groups/{groupJid}/picture:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Groups
+      operationId: getGroupProfilePicture
+      summary: Get the group's profile picture URL
+      responses:
+        '200':
+          description: Picture URL.
+  /api/groups/{groupJid}/invite-link:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Groups
+      operationId: getGroupInviteLink
+      summary: Get the group's invite link
+      responses:
+        '200':
+          description: Invite link.
+  /api/groups/{groupJid}/leave:
+    parameters:
+    - name: groupJid
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      tags:
+      - Groups
+      operationId: leaveGroup
+      summary: Leave a group
+      responses:
+        '200':
+          description: Left.
+  /api/groups/invite/{inviteCode}:
+    parameters:
+    - name: inviteCode
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Groups
+      operationId: getGroupInviteInfo
+      summary: Resolve a group invite code
+      responses:
+        '200':
+          description: Invite metadata.
+  /api/groups/invite/accept:
+    post:
+      tags:
+      - Groups
+      operationId: acceptGroupInvite
+      summary: Accept a group invite code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - invite_code
+              properties:
+                invite_code:
+                  type: string
+      responses:
+        '200':
+          description: Joined.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: bps_pat_* or bps_sk_*
+      description: 'Personal Access Token (`bps_pat_*`) or session-scoped key
+
+        (`bps_sk_*`). Either is accepted on most routes; some operations
+
+        are PAT-only.
+
+        '
+    patAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: bps_pat_*
+      description: Personal Access Token. Required for account-level routes.
+  parameters:
+    SessionId:
+      name: sessionId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: bps_sess_ws_wwdKKillB2qo0F_GfuGcSQ
+    MessageId:
+      name: messageId
+      in: path
+      required: true
+      schema:
+        type: string
+      example: bps_msg_36c9f8e1507248a5a301caaa47741488
+    StatusFilter:
+      name: status
+      in: query
+      schema:
+        oneOf:
+        - type: string
+          enum:
+          - pending
+          - connecting
+          - connected
+          - disconnected
+          - pending_deletion
+          - deleted
+        - type: array
+          items:
+            type: string
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+        default: 50
+    BeforeId:
+      name: before_id
+      in: query
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid Bearer token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Authenticated but not allowed (e.g., session-scoped key on a PAT-only
+        route).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found, or not visible to this caller.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Resource not in a state that supports this operation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Validation:
+      description: Body or query validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: Per-account rate limit exceeded.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          const: false
+        message:
+          type: string
+        reason_code:
+          type: string
+        errors:
+          type: object
+          additionalProperties: true
+          nullable: true
+      required:
+      - message
+    Session:
+      type: object
+      required:
+      - session_id
+      - account_id
+      - status
+      - created_at
+      properties:
+        session_id:
+          type: string
+          example: "bps_sess_ws_\u2026"
+        account_id:
+          type: string
+          example: "bps_acc_\u2026"
+        label:
+          type: string
+          nullable: true
+        phone_number:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum:
+          - pending
+          - connecting
+          - connected
+          - disconnected
+          - pending_deletion
+          - deleted
+        worker_id:
+          type: string
+          nullable: true
+        last_activity_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        session_api_key_fingerprint:
+          type: string
+          nullable: true
+          example: "bps_sk_\u2022\u2022\u2022\u2022XXXX"
+    SessionList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        next_cursor:
+          type: string
+          nullable: true
+    SessionApiKey:
+      type: object
+      required:
+      - raw
+      - fingerprint
+      - created_at
+      properties:
+        raw:
+          type: string
+          description: Raw bps_sk_* key. Stored once; never returned again.
+        fingerprint:
+          type: string
+          example: "bps_sk_\u2022\u2022\u2022\u2022XXXX"
+        created_at:
+          type: string
+          format: date-time
+        previous_fingerprint:
+          type: string
+    SessionSettings:
+      type: object
+      additionalProperties: false
+      properties:
+        account_protection:
+          type: boolean
+        read_incoming:
+          type: boolean
+        auto_reject_calls:
+          type: boolean
+        always_online:
+          type: boolean
+        ignore_groups:
+          type: boolean
+        ignore_broadcasts:
+          type: boolean
+        ignore_channels:
+          type: boolean
+        typing:
+          type: boolean
+    CreateSessionRequest:
+      type: object
+      properties:
+        label:
+          type: string
+        phone_number:
+          type: string
+        settings:
+          $ref: '#/components/schemas/SessionSettings'
+    CreateSessionResponse:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/Session'
+        session_api_key:
+          $ref: '#/components/schemas/SessionApiKey'
+        warnings:
+          type: array
+          items:
+            type: string
+    UpdateSessionRequest:
+      type: object
+      properties:
+        label:
+          type: string
+        phone_number:
+          type: string
+          nullable: true
+        settings:
+          $ref: '#/components/schemas/SessionSettings'
+    SendMessageRequest:
+      type: object
+      properties:
+        session_id:
+          type: string
+        to:
+          type: string
+          description: E.164 phone or WhatsApp JID.
+        channel_id:
+          type: string
+        text:
+          type: string
+        kind:
+          type: string
+          enum:
+          - image
+          - document
+          - audio
+          - video
+          - sticker
+        media_handle:
+          type: string
+        url:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+        videoUrl:
+          type: string
+          format: uri
+        documentUrl:
+          type: string
+          format: uri
+        audioUrl:
+          type: string
+          format: uri
+        stickerUrl:
+          type: string
+          format: uri
+        caption:
+          type: string
+        mime_type:
+          type: string
+        file_name:
+          type: string
+        viewOnce:
+          type: boolean
+        quoted_message_id:
+          type: string
+        mentions:
+          type: array
+          items:
+            type: string
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+            name:
+              type: string
+            address:
+              type: string
+        contact:
+          type: object
+          additionalProperties: true
+        poll:
+          type: object
+          properties:
+            question:
+              type: string
+            options:
+              type: array
+              items:
+                type: string
+              minItems: 2
+              maxItems: 12
+            multiSelect:
+              type: boolean
+    SendMessageResult:
+      type: object
+      properties:
+        msgId:
+          type: string
+          example: bps_msg_36c9f8e1507248a5a301caaa47741488
+        jid:
+          type: string
+          example: 15551234567@s.whatsapp.net
+        status:
+          type: string
+          enum:
+          - in_progress
+          - queued
+          - accepted
+          - delivered
+          - read
+          - failed
+    MessageInfo:
+      type: object
+      properties:
+        message_id:
+          type: string
+        session_id:
+          type: string
+        provider_msg_id:
+          type: string
+          nullable: true
+        to:
+          type: string
+        kind:
+          type: string
+        status:
+          type: string
+        accepted_at:
+          type: string
+          format: date-time
+          nullable: true
+        delivered_at:
+          type: string
+          format: date-time
+          nullable: true
+        read_at:
+          type: string
+          format: date-time
+          nullable: true
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+        failed_at:
+          type: string
+          format: date-time
+          nullable: true
+        failure_reason:
+          type: string
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        events:
+          type: array
+          items:
+            type: object
+            properties:
+              event_id:
+                type: integer
+              event_type:
+                type: string
+              update_kind:
+                type: string
+                nullable: true
+              emitted_at:
+                type: string
+                format: date-time
+    OperationStatus:
+      type: object
+      properties:
+        operation_id:
+          type: string
+        session_id:
+          type: string
+          nullable: true
+        operation_type:
+          type: string
+        status:
+          type: string
+        enqueued_at:
+          type: string
+          format: date-time
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          nullable: true
+        finished_at:
+          type: string
+          format: date-time
+          nullable: true
+        result:
+          description: Operation result payload (free-form).
+        error:
+          description: Operation error payload (free-form).
+        status_url:
+          type: string
+  examples:
+    SendText:
+      summary: Plain text
+      value:
+        to: '+15551234567'
+        text: "Hello from Wapio \U0001F44B"
+    SendImage:
+      summary: Image with caption (view-once)
+      value:
+        to: '+15551234567'
+        kind: image
+        imageUrl: https://example.com/cat.jpg
+        caption: "\U0001F408"
+        viewOnce: true
+    SendPoll:
+      summary: Poll with two options
+      value:
+        to: '+15551234567'
+        poll:
+          question: Tea or coffee?
+          options:
+          - Tea
+          - Coffee
+          multiSelect: false
+    SendLocation:
+      summary: Pinned location
+      value:
+        to: '+15551234567'
+        location:
+          latitude: 37.422
+          longitude: -122.084
+          name: Googleplex

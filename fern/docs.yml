@@ -1,0 +1,20 @@
+instances:
+  - url: wapio.docs.buildwithfern.com
+
+title: Wapio API
+navigation:
+  - page: Overview
+    path: ./docs/pages/overview.mdx
+  - api: API Reference
+    api-name: wapio-api
+    layout:
+      - Sessions
+      - Messages
+      - Contacts
+      - Groups
+      - Channels (Communities)
+
+api:
+  specs:
+    - openapi: ./openapi/openapi.yaml
+      name: wapio-api
